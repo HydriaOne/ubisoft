@@ -1,0 +1,38 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-gradle
+  labels:
+    app: api-gradle
+  namespace: ubisoft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gradle
+      task: api-gradle
+  template:
+    metadata:
+      labels:
+        app: api-gradle
+        task: api-gradle
+        version: v1.0
+    spec:
+      containers:
+      - image: hydria/api-gradle:latest
+        name: api-gradle
+        envFrom:
+          - configMapRef:
+              name: api-gradle-configmap
+        ports:
+        - containerPort: 8080
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+        resources:
+          limits:
+            memory: 1024Mi
+          requests:
+            memory: 128Mi

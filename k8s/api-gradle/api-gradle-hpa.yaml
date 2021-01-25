@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-gradle
+  namespace: ubisoft
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-gradle
+  minReplicas: 1
+  maxReplicas: 1
+  metrics: 
+  - type: Resource
+    resource:
+      name: memory 
+      target:
+        type: Utilization 
+        averageUtilization: 90

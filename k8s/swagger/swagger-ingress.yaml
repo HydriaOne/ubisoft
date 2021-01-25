@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: swagger-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  namespace: ubisoft
+spec:
+  rules:
+  - host: swagger.imina.cat
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: swagger
+            port:
+              number: 80
+  tls:
+  - secretName: swagger-tls-cert
+    hosts:
+      - swagger.imina.cat

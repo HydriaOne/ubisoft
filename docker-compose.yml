@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+
+  crm_db:
+    image: mariadb:latest
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+#   restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=api
+      - MYSQL_DATABASE=apiDB
+      - MYSQL_USER=api
+      - MYSQL_PASSWORD=api
+      
+  frontend:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 3000:8080
+    environment:
+      - URL=https://api-gradle.imina.cat/openapi
+    depends_on:
+      - crm_db
+
+  api-gradle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: api-gradle
+    ports:
+      - 8080:8080
+    environment:
+      - DB=crm_db
+    links:
+      - crm_db

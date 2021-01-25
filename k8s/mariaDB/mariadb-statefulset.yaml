@@ -1,0 +1,37 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: mariadb
+  labels:
+    app: mariadb
+  namespace: ubisoft
+spec:
+  serviceName: mariadb
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+      task: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+        task: mariadb
+        version: v1.0
+    spec:
+      containers:
+      - image: mariadb:latest
+        name: mariadb
+        envFrom:
+          - configMapRef:
+              name: mariadb-configmap
+        ports:
+        - containerPort: 3306
+          name: sql
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi

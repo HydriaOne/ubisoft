@@ -1,0 +1,63 @@
+plugins {
+    id 'war'
+    id "fish.payara.micro-gradle-plugin" version "1.0.4"
+}
+
+group "com.ubi.hotel.apiGradle2"
+version "0.1.0"
+
+repositories {
+    jcenter()
+}
+
+payaraMicro {
+    deployWar = true
+    javaCommandLineOptions = [Ddb: 'localhost', ea:true]
+}
+
+dependencies {
+    providedCompile 'javax:javaee-web-api:8.0'
+    implementation 'org.eclipse.microprofile:microprofile:3.3'
+
+    testImplementation  'junit:junit:4.12'
+    
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
+    // jpa
+    implementation 'org.eclipse.persistence:eclipselink:2.7.4'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+        
+    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+    // compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.6'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.6'
+      
+    // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.3'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.1'
+ 
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    // compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+
+}
+
+
+war {
+    manifest {
+        attributes(
+                "Manifest-Version": "1.0",
+                'Created-By'     : "Gradle ${gradle.gradleVersion}",
+                'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
+                'Built-By'       : System.properties['user.name'],
+                'Built-Date'     : LocalDateTime.now()
+        )
+    }
+
+    archiveFileName = 'ROOT.war'
+}

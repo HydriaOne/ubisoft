@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-gradle-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  namespace: ubisoft
+spec:
+  rules:
+  - host: api-gradle.imina.cat
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-gradle
+            port:
+              number: 80
+  tls:
+  - secretName: api-gradle-tls-cert
+    hosts:
+      - api-gradle.imina.cat

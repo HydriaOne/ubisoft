@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mariadb
+  namespace: ubisoft
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: mariadb
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 75

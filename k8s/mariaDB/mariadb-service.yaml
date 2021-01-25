@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mariadb
+  name: mariadb
+  namespace: ubisoft
+spec:
+  ports:
+  - name: sql
+    port: 3306
+    targetPort: 3306
+  selector:
+    app: mariadb

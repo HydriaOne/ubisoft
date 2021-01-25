@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: swagger
+  labels:
+    app: swagger
+  namespace: ubisoft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swagger
+      task: swagger
+  template:
+    metadata:
+      labels:
+        app: swagger
+        task: swagger
+        version: v1.0
+    spec:
+      containers:
+      - image: hydria/swagger-ui
+        name: swagger
+        envFrom:
+          - configMapRef:
+              name: swagger-configmap
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi

@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: swagger-configmap
+  namespace: ubisoft
+data:
+  URL: "https://api-gradle.imina.cat/openapi"

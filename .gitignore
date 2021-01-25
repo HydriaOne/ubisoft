@@ -1,0 +1,4 @@
+.mysql-data
+.DS_STORE
+.pytest_cache
+__pycache__

@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mariadb-configmap
+  namespace: ubisoft
+# !!! In Production this should be handled by a secret service like vault !!!
+data:
+  MYSQL_ROOT_PASSWORD: api
+  MYSQL_DATABASE: apiDB
+  MYSQL_USER: api
+  MYSQL_PASSWORD: api
